@@ -1,41 +1,104 @@
-/* Layout */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ---------- GLOBAL FONT ---------- */
+* {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* ---------- CONTAINER ---------- */
 .app-container {
   display: flex;
   height: 100vh;
-  font-family: Arial, sans-serif;
+  background: #f3f4f6; /* light background so boxes stand out */
+  padding: 1rem;
+  gap: 1rem; /* spacing between left & right panels */
+  box-sizing: border-box;
 }
 
-/* Sidebar */
-.scholarship-panel {
-  width: 30%;
-  background: #f8f9fa;
-  padding: 1rem;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
-}
-
-.scholarship-card {
-  background: white;
-  padding: 1rem;
-  margin-bottom: 1rem;
+/* ---------- LEFT: INTERNSHIP PANEL ---------- */
+.internship-panel {
+  flex: 0 0 25%;
+  background: #ffffff;
+  padding: 1.25rem;
   border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e0e0e0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.placeholder-text {
-  color: #777;
-  font-style: italic;
-}
-
-/* Chat panel */
+/* ---------- RIGHT: CHAT PANEL ---------- */
 .chat-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #eef2f5;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 
-/* Messages */
+/* ---------- INTERNSHIP SIDEBAR ---------- */
+.internship-card {
+  background: white;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.internship-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.internship-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+.internship-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+}
+
+.internship-card .company {
+  font-weight: 500;
+  color: #4a3aff;
+  margin-bottom: 0.3rem;
+}
+
+.internship-card .stipend {
+  font-size: 0.9rem;
+  color: #00897b;
+  font-weight: 500;
+}
+
+.internship-card .deadline {
+  font-size: 0.85rem;
+  color: #e53935;
+  font-weight: 500;
+}
+
+/* Placeholder message */
+.placeholder-text {
+  color: #999;
+  font-style: italic;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.5;
+}
+
+/* ---------- CHAT PANEL ---------- */
 .chat-messages {
   flex: 1;
   padding: 1rem;
@@ -64,12 +127,13 @@
   align-self: flex-start;
 }
 
-/* Input */
 .chat-input-container {
   display: flex;
   padding: 0.5rem;
   border-top: 1px solid #ddd;
   background: white;
+  border-radius: 12px 12px 0 0;
+  flex-shrink: 0;
 }
 
 .chat-input {
@@ -89,6 +153,7 @@
   cursor: pointer;
 }
 
+/* Loader */
 .loader {
   border: 2px solid #f3f3f3;
   border-top: 2px solid #4a3aff;
@@ -98,7 +163,8 @@
   animation: spin 0.6s linear infinite;
   margin: auto;
 }
-/* Navbar */
+
+/* ---------- NAVBAR ---------- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -108,8 +174,42 @@
   padding: 0.75rem 1.5rem;
 }
 
+.navbar-left h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+
+.navbar-left h2:hover {
+  transform: scale(1.05);
+}
+
+.nav-title-link {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .navbar-user {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
 }
 
 .logout-btn {
@@ -120,6 +220,7 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
 /* ---------- LOGIN PAGE ---------- */
 .login-page {
   display: flex;
@@ -128,6 +229,7 @@
   height: 100vh;
   background: linear-gradient(to bottom right, #4a3aff, #6a5acd);
   color: white;
+  padding: 1rem;
 }
 
 .login-box {
@@ -136,7 +238,8 @@
   padding: 2.5rem;
   border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
 }
 
@@ -196,6 +299,7 @@
   border-radius: 8px;
   color: #555;
 }
+
 .form-switch {
   margin-top: 1rem;
   font-size: 0.9rem;
@@ -211,7 +315,52 @@
   text-decoration: underline;
 }
 
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 1024px) {
+  .internship-panel {
+    width: 28%;
+  }
+}
 
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .internship-panel {
+    width: 100%;
+    height: 35vh;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  .chat-panel {
+    flex: 1;
+    height: 65vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-bubble {
+    max-width: 90%;
+    font-size: 0.9rem;
+  }
+  .chat-input {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  .chat-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  .login-box {
+    padding: 1.5rem;
+  }
+  .login-form input {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+}
+
+/* ---------- ANIMATIONS ---------- */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

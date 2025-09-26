@@ -13,10 +13,15 @@ export default function App() {
   const [userInput, setUserInput] = useState("");
   const chatEndRef = useRef(null);
 
-  // Welcome message after login
+  // Welcome message after login (bold)
   useEffect(() => {
     if (user) {
-      const welcomeMessage = `👋 Hello ${user.name || user.email}! I'm your AI internship assistant. Tell me about your skills and interests.`;
+      const welcomeMessage = (
+        <strong>
+          👋 Hello {user.name || user.email}! I'm your AI internship assistant. 
+          Tell me about your skills and interests.
+        </strong>
+      );
       setConversation([{ role: "bot", text: welcomeMessage }]);
     }
   }, [user]);
@@ -26,52 +31,60 @@ export default function App() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [conversation]);
 
-  // Mock internships fetch
-  const fetchInternships = async () => {
+  // Fetch internships from backend
+  const fetchInternships = async (query) => {
     setIsLoading(true);
-    setConversation((prev) => [...prev, { role: "bot", text: "🔎 Finding internships for you..." }]);
+    setConversation((prev) => [
+      ...prev,
+      { role: "bot", text: "🔎 Finding internships for you..." },
+    ]);
 
-    setTimeout(() => {
-      const mockData = [
-        {
-          title: "AI Research Intern",
-          company: "Tech Innovations",
-          stipend: "$800/month",
-          deadline: "Nov 15, 2025",
-          description: "Work on AI projects with guidance from senior researchers.",
-        },
-        {
-          title: "Frontend Developer Intern",
-          company: "Startup Hub",
-          stipend: "$600/month",
-          deadline: "Dec 10, 2025",
-          description: "Build React-based applications and contribute to UI/UX design.",
-        },
-        {
-          title: "Data Science Intern",
-          company: "Global Analytics",
-          stipend: "$750/month",
-          deadline: "Jan 5, 2026",
-          description: "Assist in analyzing datasets and building ML models.",
-        },
-      ];
-      setInternships(mockData);
+    try {
+      // Example API call — replace URL with your backend endpoint
+      const response = await fetch("http://localhost:5000/api/internships", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }), // send user input to backend
+      });
+
+      const data = await response.json();
+
+      // Update state with backend data
+      setInternships(data.internships || []);
       setConversation((prev) => [
         ...prev,
-        { role: "bot", text: `✅ I found ${mockData.length} internships that may suit you!` },
+        {
+          role: "bot",
+          text: (
+            <strong>
+              ✅ I found {data.internships?.length || 0} internships that may suit you!
+            </strong>
+          ),
+        },
       ]);
+    } catch (error) {
+      console.error("Error fetching internships:", error);
+      setConversation((prev) => [
+        ...prev,
+        { role: "bot", text: "❌ Sorry, something went wrong while fetching internships." },
+      ]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   // Handle chat input submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userInput.trim() || isLoading) return;
+
     const newUserMessage = { role: "user", text: userInput };
     setConversation((prev) => [...prev, newUserMessage]);
+
+    const query = userInput; // store input for API call
     setUserInput("");
-    await fetchInternships();
+
+    await fetchInternships(query);
   };
 
   // Logout handler
