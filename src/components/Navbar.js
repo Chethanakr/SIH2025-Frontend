@@ -7,8 +7,8 @@ export default function Navbar({ user, onLogout }) {
       {/* Left side - App Title */}
       <div className="navbar-left">
         <h2>
-          <Link to="/app" style={{ color: "white", textDecoration: "none" }}>
-            Internship Assistant 🤖
+          <Link to="/app" className="navbar-title">
+            Internship Assistant
           </Link>
         </h2>
       </div>
